@@ -40,16 +40,38 @@ def say_hello():
     return render_template("hello.html")
 
 
-@app.route("/greet")
-def greet_person():
-    """Greet user with compliment."""
+# @app.route("/greet")
+# def greet_person():
+#     """Greet user with compliment."""
 
+#     player = request.args.get("person")
+
+#     compliment = choice(AWESOMENESS)
+
+#     return render_template("compliment.html", person=player, compliment=compliment)
+
+@app.route("/game")
+def show_madlib_form():
     player = request.args.get("person")
+    user_response = request.args.get("choice")
+    if user_response == 'No':
+        return render_template("goodbye.html")
+    elif user_response == 'Yes':
+        return render_template("game.html")
+    
+    return render_template("compliment.html")
 
-    compliment = choice(AWESOMENESS)
+@app.route("/madlib")
+def show_madlib():
+    user_person = request.args.get("person")
+    user_color = request.args.get("color")
+    user_noun = request.args.get("noun")
+    user_adjective = request.args.get("adjective")
 
-    return render_template("compliment.html", person=player, compliment=compliment)
+    return render_template("madlib.html", person=user_person, color=user_color,noun=user_noun,adjective=user_adjective)
 
+
+    
 
 if __name__ == "__main__":
     # Setting debug=True gives us error messages in the browser and also
